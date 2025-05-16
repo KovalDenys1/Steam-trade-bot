@@ -9,7 +9,7 @@ const COMMISSION = 0.15;
 const APP_ID = 252490; // Rust
 
 const rustItems = [
-    "Tempered AK47", "Big Grin Mask", "Blackout Hoodie", "Alien Red", "No Mercy AR",
+  "Tempered AK47", "Big Grin Mask", "Blackout Hoodie", "Alien Red", "No Mercy AR",
     "Whiteout Pants", "Whiteout Hoodie", "Tempered Mask", "Tempered MP5", "Horror Bag",
     "Blackout Pants", "Whiteout Facemask", "Tempered LR300", "Tempered Chest Plate",
     "Rainbow Pony Hoodie", "Glory AK47", "Tempered Thompson", "No Mercy Hoodie", "Cursed Cauldron",
@@ -85,7 +85,7 @@ async function fetchPrice(itemName) {
       };
     }
   } catch (err) {
-    console.error(`❌ Ошибка при получении ${itemName}:`, err.message);
+    console.error(`❌ Error fetching ${itemName}:`, err.message);
   }
 
   return null;
@@ -95,10 +95,10 @@ async function run() {
   for (const item of rustItems) {
     const data = await fetchPrice(item);
     if (data) {
-      console.log(`💾 Сохраняю ${data.name}: прибыль ~kr${data.expected_profit}`);
+      console.log(`💾 Saving ${data.name}: profit ~kr${data.expected_profit}`);
       upsertItem(data);
     }
-    await new Promise(res => setTimeout(res, 2500 + Math.random() * 2000)); // пауза между запросами
+    await new Promise(res => setTimeout(res, 2500 + Math.random() * 2000)); // delay between requests
   }
 }
 

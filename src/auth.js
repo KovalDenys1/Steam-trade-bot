@@ -16,12 +16,12 @@ const logOnOptions = {
 client.logOn(logOnOptions);
 
 client.on('loggedOn', () => {
-  console.log(`✅ Вошёл в Steam как ${client.steamID.getSteam3RenderedID()}`);
+  console.log(`✅ Logged into Steam as ${client.steamID.getSteam3RenderedID()}`);
 });
 
 client.on('webSession', (sessionID, cookies) => {
-  console.log('🌐 Получена web-сессия');
+  console.log('🌐 Web session acquired');
   fs.writeFileSync('./cookies.json', JSON.stringify({ sessionID, cookies }, null, 2));
-  console.log('✅ Cookies сохранены в cookies.json');
+  console.log('✅ Cookies saved to cookies.json');
   community.setCookies(cookies);
 });

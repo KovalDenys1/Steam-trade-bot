@@ -7,14 +7,14 @@ const outputPath = path.join(__dirname, '../profitable_items.csv');
 
 function exportProfitableItemsToCSV() {
   const query = `
-  SELECT name, lowest_price, median_price, expected_profit, volume, last_checked
-  FROM items
-  ORDER BY expected_profit DESC
-`;
+    SELECT name, lowest_price, median_price, expected_profit, volume, last_checked
+    FROM items
+    ORDER BY expected_profit DESC
+  `;
 
   pool.query(query, [], (err, result) => {
     if (err) {
-      return console.error('❌ Ошибка при чтении базы:', err.message);
+      return console.error('❌ Error reading the database:', err.message);
     }
 
     const rows = result.rows;
@@ -22,7 +22,7 @@ function exportProfitableItemsToCSV() {
     const ws = fs.createWriteStream(outputPath);
     format.write(rows, { headers: true }).pipe(ws);
 
-    console.log(`✅ CSV-файл обновлён: ${outputPath} (${rows.length} предметов)`);
+    console.log(`✅ CSV file updated: ${outputPath} (${rows.length} items)`);
   });
 }
 

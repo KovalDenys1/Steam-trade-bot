@@ -8,23 +8,23 @@ const community = new SteamCommunity();
 community.setCookies(cookies);
 
 const APP_ID = 252490;
-const contextID = 2; // инвентарь Steam
+const contextID = 2; // Steam inventory context ID
 const identitySecret = process.env.STEAM_IDENTITY_SECRET;
 
-// Запускаем авто-подтверждение сделок каждые 20 сек
+// Start auto-confirming trade offers every 20 seconds
 community.startConfirmationChecker(20000, identitySecret);
 
 community.getMyInventoryContents(APP_ID, contextID, true, async (err, inventory) => {
-  if (err) return console.error('❌ Ошибка загрузки инвентаря:', err.message);
+  if (err) return console.error('❌ Error loading inventory:', err.message);
 
   const filtered = inventory.filter(item => item.marketable);
 
   if (filtered.length === 0) {
-    console.log('📦 Нет предметов для продажи.');
+    console.log('📦 No marketable items found.');
     return;
   }
 
-  console.log(`🔎 Найдено ${filtered.length} предметов для продажи.`);
+  console.log(`🔎 Found ${filtered.length} items ready to sell.`);
 
   for (const item of filtered) {
     const name = item.market_hash_name;
@@ -46,26 +46,26 @@ community.getMyInventoryContents(APP_ID, contextID, true, async (err, inventory)
       if (!data.success || !data.median_price) continue;
 
       const median = parseFloat(data.median_price.replace(/[^\d,.-]/g, '').replace(',', '.'));
-      const sellPrice = Math.max(median - 0.10, 1.00); // минимум 1 крон
+      const sellPrice = Math.max(median - 0.10, 1.00); // minimum price = 1 NOK
 
       community.sellMarketItem({
         appid: APP_ID,
         contextid: contextID,
         assetid: item.id,
         amount: 1,
-        price: Math.round(sellPrice * 100) // сотые NOK
+        price: Math.round(sellPrice * 100) // in cents
       }, err => {
         if (err) {
-          console.error(`❌ Не удалось продать ${name}:`, err.message);
+          console.error(`❌ Failed to list ${name} for sale:`, err.message);
         } else {
-          console.log(`✅ Выставлен на продажу: ${name} за ~${sellPrice.toFixed(2)} kr`);
+          console.log(`✅ Listed for sale: ${name} at ~${sellPrice.toFixed(2)} kr`);
         }
       });
 
-      await new Promise(res => setTimeout(res, 1500)); // задержка между итерациями
+      await new Promise(res => setTimeout(res, 1500)); // delay between iterations
 
     } catch (err) {
-      console.error(`⚠️ Не удалось получить цену для ${name}`);
+      console.error(`⚠️ Failed to fetch price for ${name}`);
     }
   }
 });

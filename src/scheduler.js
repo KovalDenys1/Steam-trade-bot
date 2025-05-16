@@ -4,14 +4,14 @@ const exportProfitableItemsToCSV = require('./exportCSV');
 const { initDB } = require('./database');
 
 async function runTask() {
-  console.log(`\n🕒 [\${new Date().toLocaleString()}] Обновление цен...`);
+  console.log(`\n🕒 [${new Date().toLocaleString()}] Updating prices...`);
   await fetchAndStore();
   exportProfitableItemsToCSV();
 }
 
 (async () => {
   await initDB();
-  await runTask(); // запуск при старте
+  await runTask(); // run on startup
   cron.schedule('0 * * * *', runTask);
-  console.log('✅ Планировщик запущен. Обновление и экспорт каждый час.');
+  console.log('✅ Scheduler started. Updates and exports every hour.');
 })();

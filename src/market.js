@@ -21,11 +21,11 @@ function placeBuyOrder(itemName, priceEUR) {
 
     community.buyMarketItem(options, (err, result) => {
       if (err) {
-        console.error(`❌ Ошибка при создании ордера для ${itemName}:`, err.message);
+        console.error(`❌ Error placing order for ${itemName}:`, err.message);
         return reject(err);
       }
 
-      console.log(`✅ Ордер на покупку '${itemName}' по ${priceEUR.toFixed(2)} kr успешно создан.`);
+      console.log(`✅ Buy order for '${itemName}' at ${priceEUR.toFixed(2)} kr successfully placed.`);
       resolve(result);
     });
   });
@@ -47,9 +47,9 @@ async function placeTopOrders(limit = 3, budget = 100) {
   let spent = 0;
 
   for (const item of res.rows) {
-    const price = parseFloat(item.lowest_price) + 0.01; // чуть выше минимальной
+    const price = parseFloat(item.lowest_price) + 0.01; // slightly above the lowest
     if (spent + price > budget) {
-      console.log(`💰 Бюджет исчерпан. Пропускаем ${item.name}`);
+      console.log(`💰 Budget exhausted. Skipping ${item.name}`);
       continue;
     }
 
@@ -57,11 +57,11 @@ async function placeTopOrders(limit = 3, budget = 100) {
       await placeBuyOrder(item.name, price);
       spent += price;
     } catch (err) {
-      console.error(`❌ Не удалось купить ${item.name}:`, err.message);
+      console.error(`❌ Failed to buy ${item.name}:`, err.message);
     }
   }
 
-  console.log(`🧾 Всего потрачено: ~${spent.toFixed(2)} NOK`);
+  console.log(`🧾 Total spent: ~${spent.toFixed(2)} NOK`);
 }
 
 module.exports = { placeBuyOrder, placeTopOrders };

@@ -1,27 +1,29 @@
 require('dotenv').config();
-const fs = require('fs');
-const SteamUser = require('steam-user');
-const SteamTotp = require('steam-totp');
-const SteamCommunity = require('steamcommunity');
+const SteamClient = require('./classes/SteamClient');
 
-const client = new SteamUser();
-const community = new SteamCommunity();
+/**
+ * Authenticate with Steam and save session cookies
+ */
+async function authenticate() {
+  const credentials = {
+    username: process.env.STEAM_USERNAME,
+    password: process.env.STEAM_PASSWORD,
+    sharedSecret: process.env.STEAM_SHARED_SECRET,
+    identitySecret: process.env.STEAM_IDENTITY_SECRET
+  };
 
-const logOnOptions = {
-  accountName: process.env.STEAM_USERNAME,
-  password: process.env.STEAM_PASSWORD,
-  twoFactorCode: SteamTotp.generateAuthCode(process.env.STEAM_SHARED_SECRET)
-};
+  const steamClient = new SteamClient(credentials);
 
-client.logOn(logOnOptions);
+  try {
+    console.log('🔐 Authenticating with Steam...\n');
+    await steamClient.login();
+    await steamClient.saveCookies('./cookies.json');
+    console.log('\n✅ Authentication completed successfully!');
+    process.exit(0);
+  } catch (error) {
+    console.error('\n❌ Authentication failed:', error.message);
+    process.exit(1);
+  }
+}
 
-client.on('loggedOn', () => {
-  console.log(`✅ Logged into Steam as ${client.steamID.getSteam3RenderedID()}`);
-});
-
-client.on('webSession', (sessionID, cookies) => {
-  console.log('🌐 Web session acquired');
-  fs.writeFileSync('./cookies.json', JSON.stringify({ sessionID, cookies }, null, 2));
-  console.log('✅ Cookies saved to cookies.json');
-  community.setCookies(cookies);
-});
+authenticate();

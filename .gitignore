@@ -2,3 +2,18 @@ node_modules/
 .env
 cookies.json
 *.csv
+
+# Documentation (except README.md)
+docs/
+
+# TypeScript
+dist/
+*.tsbuildinfo
+
+# Backup files
+*-old.js
+*-old.ts
+
+# Logs
+logs/
+*.log

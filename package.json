@@ -1,10 +1,25 @@
 {
     "name": "steam-bot",
-    "version": "1.0.0",
-    "description": "Steam Rust trading bot with PostgreSQL",
+    "version": "2.0.0",
+    "description": "Steam Rust trading bot with PostgreSQL, ML predictions, and TypeScript support",
     "main": "src/scheduler.js",
     "scripts": {
-        "start": "node src/scheduler.js"
+        "start": "node src/scheduler.js",
+        "setup": "node src/setup.js",
+        "auth": "node src/auth.js",
+        "buy": "node src/autobuy.js",
+        "buy-ml": "node src/autobuyML.js",
+        "sell": "node src/autoSell.js",
+        "analytics": "node src/showAnalytics.js",
+        "export": "node src/exportCSV.js",
+        "fetch-all": "node src/fetchAllGames.js",
+        "csgo:buy": "node src/csgo-buy.js",
+        "csgo:sell": "node src/csgo-sell.js",
+        "dota2:buy": "node src/dota2-buy.js",
+        "dota2:sell": "node src/dota2-sell.js",
+        "build": "tsc",
+        "build:watch": "tsc --watch",
+        "type-check": "tsc --noEmit"
     },
     "dependencies": {
         "axios": "^1.6.0",
@@ -15,5 +30,13 @@
         "steam-totp": "^2.1.2",
         "steam-user": "^5.2.1",
         "steamcommunity": "^3.48.6"
+    },
+    "devDependencies": {
+        "@types/node": "^20.0.0",
+        "@types/pg": "^8.10.0",
+        "typescript": "^5.3.0"
+    },
+    "engines": {
+        "node": ">=16.0.0"
     }
 }

@@ -1,0 +1,60 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "files.eol": "\n",
+  "files.encoding": "utf8",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+
+  // Language settings
+  "cSpell.language": "en",
+  "cSpell.enabled": true,
+
+  // Git settings
+  "git.ignoreLimitWarning": true,
+
+  // GitHub Copilot settings
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": true,
+    "plaintext": false,
+    "markdown": true,
+    "javascript": true
+  },
+
+  // Code style
+  "javascript.preferences.quoteStyle": "single",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+
+  // Project-specific settings
+  "files.exclude": {
+    "**/.git": true,
+    "**/node_modules": true,
+    "**/*.csv": true,
+    "**/cookies.json": true
+  },
+
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/package-lock.json": true,
+    "**/*.csv": true
+  },
+
+  // Copilot instructions
+  "github.copilot.chat.codeGeneration.instructions": [
+    {
+      "text": "Always use English for all comments, console messages, and documentation"
+    },
+    {
+      "text": "Use async/await pattern instead of callbacks"
+    },
+    {
+      "text": "Always include proper error handling with try-catch blocks"
+    },
+    {
+      "text": "Log all errors to the database logs table"
+    }
+  ]
+}

@@ -6,6 +6,11 @@ cookies.json
 # Documentation (except README.md)
 docs/
 
+# IDE - keep shared settings, ignore personal workspace files
+.vscode/*.code-workspace
+.vscode/launch.json
+.idea/
+
 # TypeScript
 dist/
 *.tsbuildinfo

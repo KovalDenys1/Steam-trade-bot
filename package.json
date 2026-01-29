@@ -1,7 +1,7 @@
 {
     "name": "steam-bot",
     "version": "2.0.0",
-    "description": "Steam Rust trading bot with PostgreSQL, ML predictions, and TypeScript support",
+    "description": "Automated Steam trading bot for Rust, CS:GO, and Dota 2 with PostgreSQL, ML predictions, and TypeScript support",
     "main": "src/scheduler.js",
     "scripts": {
         "start": "node src/scheduler.js",
